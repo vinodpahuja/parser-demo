@@ -13,18 +13,16 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<exec.mainClass>com.example.parser.BigQueryDemo</exec.mainClass>
-		<!--<exec.mainClass>com.example.parser.GremlinDemo</exec.mainClass>-->
-		<!--<exec.mainClass>com.example.parser.SparlQLDemo</exec.mainClass>-->
 	</properties>
 
 	<dependencies>
-<!-- 
+
 		<dependency>
 			<groupId>com.eclipsesource.j2v8</groupId>
 			<artifactId>j2v8_win32_x86_64</artifactId>
 			<version>4.6.0</version>
 		</dependency>
- -->		
+
 <!-- 		
 		<dependency>
 		    <groupId>com.eclipsesource.j2v8</groupId>
@@ -38,13 +36,12 @@
 			<artifactId>js</artifactId>
 			<version>22.0.0</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.graalvm.js</groupId>
 			<artifactId>js-scriptengine</artifactId>
 			<version>22.0.0</version>
 		</dependency>
-<!-- 
+
 		<dependency>
 			<groupId>org.apache.tinkerpop</groupId>
 			<artifactId>tinkergraph-gremlin</artifactId>
@@ -52,11 +49,43 @@
 		</dependency>
 		
 		<dependency>
+   			<groupId>org.apache.tinkerpop</groupId>
+   			<artifactId>sparql-gremlin</artifactId>
+   			<version>3.5.2</version>
+		</dependency>
+
+<!-- 		
+		<dependency>
 			<groupId>org.eclipse.rdf4j</groupId>
 			<artifactId>rdf4j-queryparser-sparql</artifactId>
 			<version>3.7.7</version>
 		</dependency>
+-->
+
+<!-- 
+		<dependency>
+			<groupId>com.github.jsqlparser</groupId>
+			<artifactId>jsqlparser</artifactId>
+			<version>4.4</version>
+		</dependency>
  -->
+ 
+<!-- 
+		<dependency>
+		    <groupId>org.antlr</groupId>
+		    <artifactId>antlr</artifactId>
+		    <version>3.5.3</version>
+		</dependency>
+ -->
+
+
+		<dependency>
+		    <groupId>org.parboiled</groupId>
+		    <artifactId>parboiled-java</artifactId>
+		    <version>1.1.8</version>
+		</dependency>
+
+		
 	</dependencies>
 
 	<build>
@@ -84,6 +113,44 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			<plugin>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  					<mainClass>${exec.mainClass}</mainClass>
+                				</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+<!-- 		
+			<plugin>
+				<groupId>org.antlr</groupId>
+				<artifactId>antlr4-maven-plugin</artifactId>
+				<version>4.10.1</version>
+				<executions>
+					<execution>
+						<id>antlr</id>
+						<goals>
+							<goal>antlr4</goal>
+						</goals>
+						<configuration>
+							<libDirectory>src/main/antlr4_imports</libDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+ -->		      
 		</plugins>
 
 	</build>

@@ -1,0 +1,57 @@
+
+plugins {
+    id 'java'
+	id 'application'
+	id 'com.github.johnrengelman.shadow' version '7.1.2'
+	id 'org.springframework.boot' version '2.6.0'
+}
+
+repositories {
+    //mavenLocal()
+    mavenCentral()
+	jcenter()
+}
+
+dependencies {
+    implementation 'org.graalvm.js:js:22.0.0'
+    implementation 'org.graalvm.js:js-scriptengine:22.0.0'
+}
+
+group = 'com.example'
+version = '0.0.1'
+description = 'parser-demo'
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "com.example.parser.BigQueryDemo"
+    }
+}
+ 
+task fatJar(type: Jar) {
+
+	manifest {
+        attributes "Main-Class": "com.example.parser.BigQueryDemo"
+    }
+	
+	duplicatesStrategy = DuplicatesStrategy.WARN
+	
+    //baseName = "${rootProject.name}" + "-	all"
+	classifier = 'all'
+	from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }    
+	with jar
+}
+
+shadowJar {
+	mainClassName = "com.example.parser.BigQueryDemo"
+    mergeServiceFiles()
+}
+
+
+application {
+	mainClass = "com.example.parser.BigQueryDemo"
+}
