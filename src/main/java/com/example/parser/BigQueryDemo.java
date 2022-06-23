@@ -14,15 +14,15 @@ public class BigQueryDemo {
 		testParser();
 	}
 
-//	private static ParserEngine graal = null;
+	private static ParserEngine graal = null;
 	private static ParserEngine v8 = null;
-//	private static ParserEngine nashorn = null;
+	private static ParserEngine nashorn = null;
 
 	static {
 		try {
-//			graal = new GraalParser("bigquery.peg-es6-v5.js");
-			v8 = new V8Parser("bigquery.peg-es5-v5.js");
-//			nashorn = new NashornParser("bigquery.peg-es5-v5.js");
+			graal = new GraalParser("bigquery.peg-es6-v6.js");
+			v8 = new V8Parser("bigquery.peg-es5-v6.js");
+			nashorn = new NashornParser("bigquery.peg-es5-v6.js");
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -32,12 +32,12 @@ public class BigQueryDemo {
 
 		System.out.println("sql : " + sql);
 
-//		System.out.println("--------------------------------------------");
-//		Map<?, ?> stmt = (Map<?, ?>) graal.parse(sql);
-//
-//		System.out.println("stmt.tableList : " + stmt.get("tableList"));
-//		System.out.println("stmt.columnList : " + stmt.get("columnList"));
-//		System.out.println("stmt.ast : " + stmt.get("ast"));
+		System.out.println("--------------------------------------------");
+		Map<?, ?> stmt = (Map<?, ?>) graal.parse(sql);
+
+		System.out.println("stmt.tableList : " + stmt.get("tableList"));
+		System.out.println("stmt.columnList : " + stmt.get("columnList"));
+		System.out.println("stmt.ast : " + stmt.get("ast"));
 
 		System.out.println("--------------------------------------------");
 		V8Object stmt1 = (V8Object) v8.parse(sql);
@@ -46,13 +46,14 @@ public class BigQueryDemo {
 		System.out.println("stmt1.columnList : " + stmt1.get("columnList"));
 		System.out.println("stmt1.ast : " + stmt1.get("ast"));
 
-//		System.out.println("--------------------------------------------");
-//		Map<?, ?> stmt2 = (Map<?, ?>) nashorn.parse(sql);
-//
-//		System.out.println("stmt2.tableList : " + stmt2.get("tableList"));
-//		System.out.println("stmt2.columnList : " + stmt2.get("columnList"));
-//		System.out.println("stmt2.ast : " + stmt2.get("ast"));
+		System.out.println("--------------------------------------------");
+		Map<?, ?> stmt2 = (Map<?, ?>) nashorn.parse(sql);
 
+		System.out.println("stmt2.tableList : " + stmt2.get("tableList"));
+		System.out.println("stmt2.columnList : " + stmt2.get("columnList"));
+		System.out.println("stmt2.ast : " + stmt2.get("ast"));
+		System.out.println("--------------------------------------------");
+		
 	}
 
 	private static void testParser() throws Exception {
@@ -182,9 +183,19 @@ public class BigQueryDemo {
 ////				+ "FROM PlayerStats");
 		
 		
-		parseSQL("SELECT * from 'BigQuery.order' limit 111");
-		parseSQL("create table `BigQueryE2E.Order`(id int64,name string)");
-		parseSQL("insert into BigQueryE2E.Ordered (id,name) values (101,\"sandeep\")");
+//		parseSQL("SELECT * from 'BigQuery.order' limit 111");
+//		parseSQL("create table `BigQueryE2E.Order`(id int64,name string)");
+//		parseSQL("insert into BigQueryE2E.Ordered (id,name) values (101,\"sandeep\")");
+		
+		parseSQL("INSERT Singers "
+		+ "SELECT SingerId, FirstName, LastName FROM AckworthSingers");
+
+		parseSQL("UPDATE Singers\n" + "SET BirthDate = '1990-10-10'\n"
+				+ "From Singers "
+				+ "WHERE FirstName = 'Marc' AND LastName = 'Richards'");
+		
+		parseSQL("DELETE target_name WHERE true");
+
 
 		
 //		parseSQL("select * from Employee");
