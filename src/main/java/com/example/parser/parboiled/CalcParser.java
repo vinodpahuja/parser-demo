@@ -1,4 +1,4 @@
-package com.example.parser.para;
+package com.example.parser.parboiled;
 
 import org.parboiled.Rule;
 import org.parboiled.annotations.BuildParseTree;

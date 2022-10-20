@@ -1,18 +1,15 @@
 package com.example.parser;
 
+import org.parboiled.Parboiled;
+import org.parboiled.parserunners.BasicParseRunner;
+import org.parboiled.parserunners.ParseRunner;
 import org.parboiled.support.ParseTreeUtils;
 import org.parboiled.support.ParsingResult;
 
-import com.example.parser.engine.ParaParserRunner;
-import com.example.parser.para.SQLParser;
+import com.example.parser.parboiled.AbsBaseParser;
+import com.example.parser.parboiled.SQLParser;
 
-public class ParaParserDemo {
-
-//	private static ParaParserRunner parser = new ParaParserRunner(SparqlParser.class);
-
-//	private static ParaParserRunner parser = new ParaParserRunner(CalcParser.class);
-
-	private static ParaParserRunner parser = new ParaParserRunner(SQLParser.class);
+public class ParboiledDemo {
 
 	public static void main(String[] args) throws Exception {
 		testParser();
@@ -20,7 +17,13 @@ public class ParaParserDemo {
 
 	private static void parse(String string) throws Exception {
 
-		ParsingResult<?> result = parser.parse(string);
+//		AbsBaseParser parser = Parboiled.createParser(CalcParser.class);
+		AbsBaseParser parser = Parboiled.createParser(SQLParser.class);
+
+//		ParseRunner<?> runner = new TracingParseRunner<>(parser.start());
+		ParseRunner<?> runner = new BasicParseRunner<>(parser.start());
+
+		ParsingResult<?> result = runner.run(string);
 
 		System.out.println("--------------------------------------------");
 		System.out.println("sql : " + string);
@@ -43,6 +46,7 @@ public class ParaParserDemo {
 //		parse(" 22 + ( 33 * 44 ) ");
 
 		parse(" select * from employee ");
+
 //		parse(" select * from Employee1 ");		
 //		parse(" Select * From Employee1 ");
 //

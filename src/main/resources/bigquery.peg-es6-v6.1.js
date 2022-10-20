@@ -1,4 +1,4 @@
-PegParser = 
+PegParser =
 (function() {
   "use strict";
 
@@ -308,7 +308,7 @@ PegParser =
           function(name, l) {
                 //compatible with original func_call
                 return {
-                  type: 'function',
+                  type: 'proc',
                   name: name,
                   args: {
                     type: 'expr_list',
@@ -318,7 +318,7 @@ PegParser =
               },
           function(name) {
               return {
-                  type: 'function',
+                  type: 'proc',
                   name: name,
                   args: null
                 };
@@ -2552,7 +2552,7 @@ PegParser =
           peg$decode("2\u01B2\"\"6\u01B27\u01B3.) &2\u01B4\"\"6\u01B47\u01B5"),
           peg$decode("%;\xE5/\x83#$%;\u01AF/>#;\xE4/5$;\u01AF/,$;\xE5/#$+$)($'#(#'#(\"'#&'#0H*%;\u01AF/>#;\xE4/5$;\u01AF/,$;\xE5/#$+$)($'#(#'#(\"'#&'#&/)$8\":\u01B6\"\"! )(\"'#&'#"),
           peg$decode("2\u01B7\"\"6\u01B77\u01B8.5 &2\u01B9\"\"6\u01B97\u01BA.) &2\u01BB\"\"6\u01BB7\u01BC"),
-          peg$decode(";\xCC.\x86 &;\u0108.\x80 &;\u010A.z &;\xFB.t &;\u0103.n &;\xE7.h &;\xE6.b &;\xEA.\\ &;\xF9.V &%;\u01A5/L#;\u01AF/C$;\xD0/:$;\u01AF/1$;\u01A6/($8%:\u01BD%!\")(%'#($'#(#'#(\"'#&'#"),
+          peg$decode(";\xCC.\x8C &;\xCD.\x86 &;\u0108.\x80 &;\u010A.z &;\xFB.t &;\u0103.n &;\xE7.h &;\xE6.b &;\xEA.\\ &;\xF9.V &%;\u01A5/L#;\u01AF/C$;\xD0/:$;\u01AF/1$;\u01A6/($8%:\u01BD%!\")(%'#($'#(#'#(\"'#&'#"),
           peg$decode("%;\u0189/M#;\u01AF/D$;\xC9/;$;\u01AF/2$;\u01B6/)$8%:\u01BE%\"\" )(%'#($'#(#'#(\"'#&'#"),
           peg$decode("%;\u0161/\x88#;\u01AF/\x7F$$;\xE8/&#0#*;\xE8&&&#/i$;\u01AF/`$;\xE9.\" &\"/R$;\u01AF/I$;\u0165/@$;\u01AF/7$;\u0161.\" &\"/)$8):\u01BF)\"&$)()'#(('#(''#(&'#(%'#($'#(#'#(\"'#&'#.\xA5 &%;\u0161/\x9B#;\u01AF/\x92$;\xC9/\x89$;\u01AF/\x80$$;\xE8/&#0#*;\xE8&&&#/j$;\u01AF/a$;\xE9.\" &\"/S$;\u01AF/J$;\u0165/A$;\u01AF/8$;\u0161.\" &\"/*$8+:\u01C0+#(&$)(+'#(*'#()'#(('#(''#(&'#(%'#($'#(#'#(\"'#&'#"),
           peg$decode("%;\u0162/_#;\u01AF/V$;\xD0/M$;\u01AF/D$;\u0163/;$;\u01AF/2$;\xC9/)$8':\u01C1'\"$ )(''#(&'#(%'#($'#(#'#(\"'#&'#"),

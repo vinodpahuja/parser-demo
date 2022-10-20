@@ -1,4 +1,4 @@
-package com.example.parser.para;
+package com.example.parser.parboiled;
 
 import org.parboiled.Action;
 import org.parboiled.Rule;
@@ -10,11 +10,13 @@ import org.parboiled.annotations.SkipNode;
 public class SQLParser extends AbsBaseParser {
 
 	Rule tableName = _w;
-	
+
 	Rule columnName = _w;
 	Rule columnNames = seq(columnName, __, _0n(seq(__, sep(','), __, columnName, __))).suppressNode();
 
 	Rule expr = _1of(columnName, _l).suppressNode();
+
+	Action<String> nowhere = (Action<String>) context -> !context.getMatch().equalsIgnoreCase("where");
 
 	@Override
 	public Rule start() {
@@ -32,14 +34,11 @@ public class SQLParser extends AbsBaseParser {
 		return seq(__, v(i("select")), __, _1of(sc("*"), columnNames), __ //
 				, kw(i("from")), __, select_expr(), __ //
 				, _01(seq(_01(kw(i("as"))), __//
-						, o(tableName), //
-						(Action<String>) context -> !context.getMatch().equalsIgnoreCase("where"), __).skipNode()),
+						, o(tableName), nowhere, __).skipNode()),
 				__ //
 				, _01(seq(kw(i("where")), __, expr, __, op(), __, expr, __).skipNode()), __//
 		);
 	}
-
-
 
 	@SkipNode
 	Rule select_expr() {

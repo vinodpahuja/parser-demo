@@ -24,17 +24,10 @@ public class V8Parser implements ParserEngine {
 	}
 
 	public V8Object parse(String sql) {
-
 		V8Object parser = ((V8Object) getParser());
 		V8Object stmt = (V8Object) parser.executeJSFunction("parse", sql);
-
-//		tableList.release();
-//		columnList.release();
-//		stmt.release();
 		parser.release();
-
 		return stmt;
-
 	}
 
 	public Object getParser() {

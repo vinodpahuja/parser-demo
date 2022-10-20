@@ -25,13 +25,13 @@ public class GraalParser implements ParserEngine {
 		engine.eval(new InputStreamReader(GraalParser.class.getClassLoader().getResourceAsStream(parserscript)));
 	}
 
-	public Object parse(String sql) throws Exception {
-		Map<?, ?> stmt = (Map<?, ?>) ((Invocable) engine).invokeMethod(getParser(), "parse", sql);
+	public Object parse(String input) throws Exception {
+		Map<?, ?> stmt = (Map<?, ?>) ((Invocable) engine).invokeMethod(getParser(), "parse", input);
 		return stmt;
 	}
 
-	public Object getParser() {
-		return engine.get("PegParser");
+	public Object getParser() throws Exception {
+		return engine.eval("PegParser");
 	}
 
 }

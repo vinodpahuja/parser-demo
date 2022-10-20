@@ -1,7 +1,5 @@
 package com.example.parser;
 
-import java.util.Map;
-
 import com.eclipsesource.v8.V8Object;
 import com.example.parser.engine.GraalParser;
 import com.example.parser.engine.NashornParser;
@@ -20,9 +18,9 @@ public class BigQueryDemo {
 
 	static {
 		try {
-			graal = new GraalParser("bigquery.peg-es6-v6.js");
-			v8 = new V8Parser("bigquery.peg-es5-v6.js");
-			nashorn = new NashornParser("bigquery.peg-es5-v6.js");
+//			graal = new GraalParser("bigquery.peg-es6-v6.1.js");
+			v8 = new V8Parser("bigquery.peg-es5-v6.1.js");
+//			nashorn = new NashornParser("bigquery.peg-es5-v6.1.js");
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -32,12 +30,12 @@ public class BigQueryDemo {
 
 		System.out.println("sql : " + sql);
 
-		System.out.println("--------------------------------------------");
-		Map<?, ?> stmt = (Map<?, ?>) graal.parse(sql);
-
-		System.out.println("stmt.tableList : " + stmt.get("tableList"));
-		System.out.println("stmt.columnList : " + stmt.get("columnList"));
-		System.out.println("stmt.ast : " + stmt.get("ast"));
+//		System.out.println("--------------------------------------------");
+//		Map<?, ?> stmt = (Map<?, ?>) graal.parse(sql);
+//
+//		System.out.println("stmt.tableList : " + stmt.get("tableList"));
+//		System.out.println("stmt.columnList : " + stmt.get("columnList"));
+//		System.out.println("stmt.ast : " + stmt.get("ast"));
 
 		System.out.println("--------------------------------------------");
 		V8Object stmt1 = (V8Object) v8.parse(sql);
@@ -47,13 +45,13 @@ public class BigQueryDemo {
 		System.out.println("stmt1.ast : " + stmt1.get("ast"));
 
 		System.out.println("--------------------------------------------");
-		Map<?, ?> stmt2 = (Map<?, ?>) nashorn.parse(sql);
+//		Map<?, ?> stmt2 = (Map<?, ?>) nashorn.parse(sql);
+//
+//		System.out.println("stmt2.tableList : " + stmt2.get("tableList"));
+//		System.out.println("stmt2.columnList : " + stmt2.get("columnList"));
+//		System.out.println("stmt2.ast : " + stmt2.get("ast"));
+//		System.out.println("--------------------------------------------");
 
-		System.out.println("stmt2.tableList : " + stmt2.get("tableList"));
-		System.out.println("stmt2.columnList : " + stmt2.get("columnList"));
-		System.out.println("stmt2.ast : " + stmt2.get("ast"));
-		System.out.println("--------------------------------------------");
-		
 	}
 
 	private static void testParser() throws Exception {
@@ -123,10 +121,8 @@ public class BigQueryDemo {
 //
 //		parseSQL("UPDATE Singers\n" + "SET BirthDate = '1990-10-10'\n"
 //				+ "WHERE FirstName = 'Marc' AND LastName = 'Richards'");
-//
 //		parseSQL("UPDATE Concerts SET TicketPrices = [25, 50, 100]\n" + " WHERE VenueId = 1");
-//
-		
+//		
 //		parseSQL("CREATE DATABASE first-db");
 //		
 //		parseSQL("create SCHEMA testInfo");
@@ -138,8 +134,8 @@ public class BigQueryDemo {
 //		parseSQL("CREATE TABLE Singers (\n" + "SingerId INT64 NOT NULL,\n" + "FirstName STRING(1024),\n"
 //				+ "LastName STRING(1024),\n" + "SingerInfo BYTES(MAX),\n" + "BirthDate DATE\n"
 //				+ ")");
-		
-		
+//		
+//		
 //		parseSQL("SELECT s.SingerId, s.FirstName, s.LastName, s.SingerInfo, c.ConcertDate\n"
 //				+ "FROM Singers@{FORCE_INDEX=SingersByFirstLastName} AS s JOIN\n"
 //				+ "Concerts@{FORCE_INDEX=ConcertsBySingerId} AS c ON s.SingerId = c.SingerId\n"
@@ -169,35 +165,46 @@ public class BigQueryDemo {
 //				+ "UNION ALL\n"
 //				+ "SELECT LastName\n"
 //				+ "FROM PlayerStats");
-//				
-////		parseSQL("SELECT LastName\n"
-////				+ "FROM Roster\n"
-////				+ "INTERSECT ALL\n"
-////				+ "SELECT LastName\n"
-////				+ "FROM PlayerStats");
+
+////		parseSQL("SELECT LastName\n" + "FROM Roster\n" + "INTERSECT ALL\n" + "SELECT LastName\n" + "FROM PlayerStats");
 ////		
-////		parseSQL("SELECT LastName\n"
-////				+ "FROM Roster\n"
-////				+ "EXCEPT DISTINCT\n"
-////				+ "SELECT LastName\n"
-////				+ "FROM PlayerStats");
-		
-		
+////		parseSQL("SELECT LastName\n" + "FROM Roster\n" + "EXCEPT DISTINCT\n" + "SELECT LastName\n" + "FROM PlayerStats");
+
 //		parseSQL("SELECT * from 'BigQuery.order' limit 111");
 //		parseSQL("create table `BigQueryE2E.Order`(id int64,name string)");
 //		parseSQL("insert into BigQueryE2E.Ordered (id,name) values (101,\"sandeep\")");
-		
-		parseSQL("INSERT Singers "
-		+ "SELECT SingerId, FirstName, LastName FROM AckworthSingers");
+//		
+//		parseSQL("INSERT Singers "
+//		+ "SELECT SingerId, FirstName, LastName FROM AckworthSingers");
+//
+//		parseSQL("UPDATE Singers\n" + "SET BirthDate = '1990-10-10'\n"
+//				+ "From Singers "
+//				+ "WHERE FirstName = 'Marc' AND LastName = 'Richards'");
+//		
+//		parseSQL("DELETE target_name WHERE true");
 
-		parseSQL("UPDATE Singers\n" + "SET BirthDate = '1990-10-10'\n"
-				+ "From Singers "
-				+ "WHERE FirstName = 'Marc' AND LastName = 'Richards'");
-		
-		parseSQL("DELETE target_name WHERE true");
+//		parseSQL("UPDATE dataset.DetailedInventory\n"
+//				+ "SET comments = ARRAY<STRUCT<created DATE, comment STRING>>[(CAST('2016-01-01' AS DATE), 'comment1')]\n"
+//				+ "WHERE product like '%washer%'");
+//		
+//		parseSQL("UPDATE dataset.DetailedInventory\n"
+//				+ "SET specifications = ARRAY<STRUCT<color STRING, warranty STRING, \n"
+//				+ "					dimensions STRUCT<depth FLOAT64, height FLOAT64, width FLOAT64>>>\n"
+//				+ "					[('white', '1 year', NULL)]\n"
+//				+ "WHERE product like '%washer%'\n");
+//
+//		parseSQL("UPDATE dataset.DetailedInventory\n"
+//				+ "SET comments = STRUCT<created DATE, comment STRING>('2016-01-01', 'comment1')\n"
+//				+ "WHERE product like '%washer%'");
+//		
+//		parseSQL("UPDATE dataset.DetailedInventory\n"
+//				+ "SET specifications = STRUCT<color STRING, warranty STRING, \n"
+//				+ "					dimensions STRUCT<depth FLOAT64, height FLOAT64, width FLOAT64>>\n"
+//				+ "					('white', '1 year', NULL)\n"
+//				+ "WHERE product like '%washer%'");
 
+//		parseSQL("SELECT * FROM `charged-mind-281913.SYdataset.books` FOR SYSTEM_TIME AS OF TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 1 HOUR)");
 
-		
 //		parseSQL("select * from Employee");
 
 	}
